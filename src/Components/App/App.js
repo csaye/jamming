@@ -16,6 +16,7 @@ class App extends React.Component {
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
+    this.search = this.search.bind(this);
   }
   addTrack(track) {
     if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
@@ -45,6 +46,9 @@ class App extends React.Component {
     for (let track in this.state.playlistTracks) {
       trackURIs.push(track.uri);
     }
+  }
+  search(term) {
+    console.log(term);
   }
   render() {
     return (
