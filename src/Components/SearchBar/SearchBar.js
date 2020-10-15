@@ -32,7 +32,8 @@ class SearchBar extends React.Component {
       onChange={this.handleTermChange}
       onKeyPress={this.handleKeyPress}
       />
-      <button className="SearchButton" onClick={this.search}>SEARCH</button>
+      <button className="SearchBarButton" onClick={this.search}>SEARCH</button>
+      <button className="SearchBarButton" onClick={this.reset}>RESET</button>
     </div>
   );
   }

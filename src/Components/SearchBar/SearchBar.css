@@ -4,6 +4,7 @@
   align-items: center;
   padding-top: 6.94rem;
   margin-bottom: 6.33rem;
+  user-select: none;
 }
 
 .SearchBar input {
@@ -21,7 +22,7 @@
   outline: none;
 }
 
-.SearchButton {
+.SearchBarButton {
   cursor: pointer;
   width: 8.11rem;
   padding: .77rem 0;
@@ -33,8 +34,10 @@
   border: 0px;
   color: #fff;
   font-weight: 500;
+  margin: 0.25rem;
+  outline: none;
 }
 
-.SearchButton:hover {
+.SearchBarButton:hover {
   background-color: rgba(108, 65, 233, .7);
 }
