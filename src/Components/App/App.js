@@ -13,6 +13,8 @@ class App extends React.Component {
       playlistTracks: []
     };
     this.addTrack = this.addTrack.bind(this);
+    this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
   }
   addTrack(track) {
     if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
@@ -21,7 +23,21 @@ class App extends React.Component {
     this.state.playlistTracks.push(track.id);
     this.setState = {
       playlistTracks: this.state.playlistTracks
+    };
+  }
+  removeTrack(track) {
+    if (!this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
+      return;
     }
+    this.state.playlistTracks.splice(track.id);
+    this.setState = {
+      playlistTracks: this.state.playlistTracks
+    };
+  }
+  updatePlaylistName(name) {
+    this.setState = {
+      playlistName: name
+    };
   }
   render() {
     return (
@@ -30,8 +46,16 @@ class App extends React.Component {
         <div className="App">
           <SearchBar />
           <div className="App-playlist">
-            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
-            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} />
+            <SearchResults
+              searchResults={this.state.searchResults}
+              onAdd={this.addTrack}
+              onRemove={this.removeTrack}
+              />
+            <Playlist
+              playlistName={this.state.playlistName}
+              playlistTracks={this.state.playlistTracks}
+              onNameChange={this.updatePlaylistName}
+            />
           </div>
         </div>
       </div>
