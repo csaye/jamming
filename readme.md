@@ -1,4 +1,4 @@
-# Jammming
+# Jamming
 
 A Spotify playlist builder.
 

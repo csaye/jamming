@@ -21,10 +21,10 @@ const Spotify = {
   search(term) {
     const data = {
       headers: {
-        Authorization: `Bearer ${accessToken}`
+        Authorization: `Bearer ${this.getAccessToken()}`
       }
     };
-    const url = `https://api.spotify.com/v1/search?type=track&q=${term}`;
+    const url = `https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/search?type=track&q=${term}`;
     return fetch(url, data).then(response => {
       if (response.ok) {
         return response.json();
@@ -47,9 +47,8 @@ const Spotify = {
     if (!name || !trackURIs) {
       return;
     }
-    const accessToken = this.getAccessToken();
     const headers = {
-      Authorization: `Bearer ${accessToken}`
+      Authorization: `Bearer ${this.getAccessToken()}`
     };
     let userID;
     let playlistID;
