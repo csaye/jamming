@@ -12,6 +12,7 @@ class TrackList extends React.Component {
             name={track.name}
             artist={track.artist}
             album={track.album}
+            onAdd={this.props.onAdd}
           />
         )}
       </div>
