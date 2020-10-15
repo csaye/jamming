@@ -1,27 +1,34 @@
 import credentials from './Credentials';
 
-let accessToken;
+let userAccessToken;
 let expiresIn;
 const clientID = credentials.clientID;
 const redirectURI = 'http://localhost:3000/';
 
 const Spotify = {
   getAccessToken() {
-    if (accessToken) {
-      return accessToken;
-    } else if (window.location.href.match(/access_token=([^&]*)/) != null) {
-      accessToken = window.location.href.match(/access_token=([^&]*)/)[1];
-      expiresIn = window.location.href.match(/expires_in=([^&]*)/)[1];
-      window.setTimeout(() => accessToken = '', expiresIn * 1000);
+    if (userAccessToken) {
+      return userAccessToken;
+    }
+    const accessTokenRegex = /access_token=([^&]*)/;
+    const expiresInRegex = /expires_in=([^&]*)/;
+    const accessTokenMatch = window.location.href.match(accessTokenRegex);
+    const expiresInMatch = window.location.href.match(expiresInRegex);
+    if (accessTokenMatch && expiresInMatch) {
+      userAccessToken = accessTokenMatch[1];
+      expiresIn = expiresInMatch[1];
+      window.setTimeout(() => userAccessToken = '', expiresIn * 1000);
       window.history.pushState('Access Token', null, '/');
+      return userAccessToken;
     } else {
       window.location = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
     }
   },
   search(term) {
     const data = {
+      method: 'GET',
       headers: {
-        Authorization: `Bearer ${this.getAccessToken()}`
+        Authorization: `Bearer ${userAccessToken}`
       }
     };
     const url = `https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/search?type=track&q=${term}`;
@@ -37,9 +44,12 @@ const Spotify = {
           name: track.name,
           artist: track.artists[0].name,
           album: track.album.name,
-          uri: track.uri
-        }))
+          uri: track.uri,
+          preview: track.preview_url
+        }));
       }
+      console.log('no tracks found');
+      console.log(jsonResponse);
       return [];
     });
   },
@@ -47,8 +57,9 @@ const Spotify = {
     if (!name || !trackURIs) {
       return;
     }
+    const accessToken = this.getAccessToken();
     const headers = {
-      Authorization: `Bearer ${this.getAccessToken()}`
+      Authorization: `Bearer ${accessToken}`
     };
     let userID;
     let playlistID;
@@ -70,9 +81,9 @@ const Spotify = {
         })
       }).then(response => {
         if (response.ok) {
-          return response.json;
+          return response.json();
         }
-        throw new Error('Post request failed');
+        throw new Error('Post request failed!');
       }, networkError => console.log(networkError.message)).then(jsonResponse => {
         playlistID = jsonResponse.id;
         fetch(`https://api.spotify.com/v1/users/${userID}/playlists/${playlistID}/tracks`, {

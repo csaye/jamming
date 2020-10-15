@@ -26,6 +26,7 @@ class Track extends React.Component {
         <div className="Track-information">
           <h3>{this.props.name}</h3>
           <p>{this.props.artist} | {this.props.album}</p>
+          <a href={this.props.preview} target="_blank" rel="noopener noreferrer">preview</a>
         </div>{this.renderAction()}</div>
     );
   }
