@@ -21,22 +21,23 @@ class App extends React.Component {
     Spotify.getAccessToken();
   }
   addTrack(track) {
-    console.log('adding ' + track);
-    if (this.state.playlistTracks.indexOf(track) !== -1) {
+    const trackIndex = this.state.playlistTracks.indexOf(track);
+    if (trackIndex !== -1) {
       return;
     }
-    let newPlaylistTracks = this.state.playlistTracks;
+    let newPlaylistTracks = this.state.playlistTracks.slice();
     newPlaylistTracks.push(track);
     this.setState({
       playlistTracks: newPlaylistTracks
     });
   }
   removeTrack(track) {
-    if (this.state.playlistTracks.indexOf(track) === -1) {
+    const trackIndex = this.state.playlistTracks.indexOf(track);
+    if (trackIndex === -1) {
       return;
     }
-    let newPlaylistTracks = this.state.playlistTracks;
-    newPlaylistTracks.splice(track.id);
+    let newPlaylistTracks = this.state.playlistTracks.slice();
+    newPlaylistTracks.splice(trackIndex, 1);
     this.setState({
       playlistTracks: newPlaylistTracks
     });
@@ -51,10 +52,11 @@ class App extends React.Component {
       return track.uri;
     });
     Spotify.savePlaylist(this.state.playlistName, trackURIs);
-    this.setState({
-      playlistName: 'New Playlist',
-      searchResults: []
-    });
+    alert(`Playlist "${this.state.playlistName}" saved successfully!`);
+    // this.setState({
+    //   playlistName: 'New Playlist',
+    //   searchResults: []
+    // });
   }
   search(term) {
     if (!term) {
