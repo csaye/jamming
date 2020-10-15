@@ -8,6 +8,7 @@ class TrackList extends React.Component {
       <div className="TrackList">
         {this.props.tracks.map(track =>
           <Track
+            track={track}
             key={track.id}
             name={track.name}
             artist={track.artist}
