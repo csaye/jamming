@@ -18,6 +18,7 @@ class App extends React.Component {
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
+    this.reset = this.reset.bind(this);
     Spotify.getAccessToken();
   }
   addTrack(track) {
@@ -53,10 +54,6 @@ class App extends React.Component {
     });
     Spotify.savePlaylist(this.state.playlistName, trackURIs);
     alert(`Playlist "${this.state.playlistName}" saved successfully!`);
-    // this.setState({
-    //   playlistName: 'New Playlist',
-    //   searchResults: []
-    // });
   }
   search(term) {
     if (!term) {
@@ -68,12 +65,22 @@ class App extends React.Component {
       });
     });
   }
+  reset() {
+    this.setState({
+      searchResults: [],
+      playlistName: 'New Playlist',
+      playlistTracks: []
+    });
+  }
   render() {
     return (
       <div>
         <h1>Ja<span className="highlight">mm</span>ing</h1>
         <div className="App">
-          <SearchBar onSearch={this.search} />
+          <SearchBar
+          onSearch={this.search}
+          onReset={this.reset}
+          />
           <div className="App-playlist">
             <SearchResults
               searchResults={this.state.searchResults}
