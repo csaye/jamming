@@ -3,7 +3,7 @@ import credentials from './Credentials';
 let userAccessToken;
 let expiresIn;
 const clientID = credentials.clientID;
-const redirectURI = 'http://localhost:3000/';
+const redirectURI = 'https://cooper.computer/jamming/';
 
 const Spotify = {
   getAccessToken() {
