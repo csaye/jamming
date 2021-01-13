@@ -1,6 +1,6 @@
 # Jamming
 
-A Spotify playlist builder.
+A Spotify playlist builder. Try it here: [cooper.computer/jamming](https://cooper.computer/jamming)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
