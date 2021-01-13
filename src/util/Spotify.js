@@ -18,7 +18,7 @@ const Spotify = {
       userAccessToken = accessTokenMatch[1];
       expiresIn = expiresInMatch[1];
       window.setTimeout(() => userAccessToken = '', expiresIn * 1000);
-      window.history.pushState('Access Token', null, '/');
+      window.history.pushState('Access Token', null, '/jamming/');
       return userAccessToken;
     } else {
       window.location = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
@@ -31,7 +31,7 @@ const Spotify = {
         Authorization: `Bearer ${userAccessToken}`
       }
     };
-    const url = `https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/search?type=track&q=${term}`;
+    const url = `https://api.spotify.com/v1/search?type=track&q=${term}`;
     return fetch(url, data).then(response => {
       if (response.ok) {
         return response.json();
