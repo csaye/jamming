@@ -3,7 +3,7 @@ import credentials from './Credentials';
 let userAccessToken;
 let expiresIn;
 const clientID = credentials.clientID;
-const redirectURI = 'https://cooper.computer/jamming/';
+const redirectURI = 'https://csaye.com/jamming/';
 
 const Spotify = {
   getAccessToken() {
@@ -63,7 +63,7 @@ const Spotify = {
     };
     let userID;
     let playlistID;
-    return fetch('https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/me', {
+    return fetch('https://api.spotify.com/v1/me', {
       method: 'GET',
       headers: headers
     }).then(response => {
